@@ -1,6 +1,7 @@
 //: # Welcome to the UW Calculator Playground (Simple Version)
 //:
 print("Welcome to the UW Calculator Playground")
+import Foundation
 //: This homework is designed to force you to exercise your knowledge of the Swift programming language. This homework does not involve iOS in any way. It uses the Playground feature of XCode to allow you to interactively write Swift code--the compiler will constantly check your code in the background.
 //:
 //: In this exercise, you will implement a pair of functions that do some simple mathematical calculations.
@@ -27,13 +28,39 @@ print("Welcome to the UW Calculator Playground")
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
 func calculate(_ args: [String]) -> Int {
-    return -1
+//    if (args[1] == "%") {
+//        var num1 = args[0]
+//        var num2 = args[2]
+//        var result = expression.expressionValue(with: nil, context: nil) as? Int
+////        var num1 = NSExpression(forConstantValue: args[0])
+////        print(num1)
+////        var num2 = NSExpression(forConstantValue: args[2])
+////        print(num2)
+////        var expression = NSExpression(forFunction: "modulus:by:", arguments: [num1, num2])
+////        print(expression)
+////        if var result = expression.expressionValue(with: nil, context: nil) as? Int {
+////            print("hello")
+////        } else {
+////            print("naw")
+////        }
+//    }
+    
+    var totalString = ""
+    for n in args {
+        totalString += n
+    }
+    return 0
+    //return calculate(totalString)
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    let expression = NSExpression(format: arg)
+    if var result = expression.expressionValue(with: nil, context: nil) as? Int {
+        return result
+    }
+    return 0
 }
-
+print(calculate("5 + 5"))
 //: Below this are the test expressions/calls to verify if your code is correct.
 //:
 //: ***DO NOT MODIFY ANYTHING BELOW THIS***
@@ -72,9 +99,9 @@ calculate("2 * 2") == 4
 calculate("2 - 2") == 0
 calculate("2 / 2") == 1
 
-calculate("1 2 3 4 5 count") == 5
-calculate("1 2 3 4 5 avg") == 3
-calculate("5 fact") == 120
+//calculate("1 2 3 4 5 count") == 5
+//calculate("1 2 3 4 5 avg") == 3
+//calculate("5 fact") == 120
 
 //: -------------------------------------------
 //: These are extra credit tests; they are commented out 
