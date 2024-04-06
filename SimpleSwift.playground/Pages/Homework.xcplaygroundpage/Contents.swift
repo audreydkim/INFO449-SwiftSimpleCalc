@@ -28,41 +28,43 @@ import Foundation
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
 func calculate(_ args: [String]) -> Int {
-//    if (args[1] == "%") {
-//        var num1 = args[0]
-//        var num2 = args[2]
-//        var result = expression.expressionValue(with: nil, context: nil) as? Int
-//       var num1 = NSExpression(forConstantValue: args[0])
-//       print(num1)
-//       var num2 = NSExpression(forConstantValue: args[2])
-//        print(num2)
-//        var expression = NSExpression(forFunction: "modulus:by:", arguments: [num1, num2])
-//        print(expression)
-//        if var result = expression.expressionValue(with: nil, context: nil) as? Int {
-//            print("hello")
-//        } else {
-//            print("naw")
-//        }
-//    }
-    // if last
     let size = args.count
     let lastIndex = args[size - 1]
-    
+    args[0]
     if lastIndex == "count" {
+        if size == 1 {
+            return 0
+        }
         return size - 1
     } else if lastIndex == "avg" {
+        if size == 1 {
+            return 0
+        }
         var string = args[0]
         var div = size - 1
         if size > 2 {
             for i in 1...size-2 {
                 string += " + " + args[i]
             }
-        } else if size == 1{
-            return 0
         }
         return calculate(string) / div
     } else if lastIndex == "fact" {
-        return 1
+        var string = ""
+        if size == 1 {
+            return 0
+        }
+        
+        if args[0] == "0"  || args[0] == "1"{
+            return 1
+        } else {
+            let num = args[0]
+            let int = Int(num) ?? 0
+            string = num
+            for n in 1...int-1 {
+                string += " * \(n)"
+            }
+        }
+        return calculate(string)
     }
     
     if (args[1] == "%") {
@@ -77,14 +79,23 @@ func calculate(_ args: [String]) -> Int {
 }
 
 func calculate(_ arg: String) -> Int {
-    let expression = NSExpression(format: arg)
-    if var result = expression.expressionValue(with: nil, context: nil) as? Int {
-        return result
+    if arg.contains("count") {
+        return 0
+    } else if arg.contains("avg") {
+        return 0
+    } else if arg.contains("fact") {
+        return 0
+    } else {
+        let expression = NSExpression(format: arg)
+        if var result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        }
     }
     return 0
 }
-
-//
+//: Below this are the test expressions/calls to verify if your code is correct.
+//:
+//: ***DO NOT MODIFY ANYTHING BELOW THIS***
 calculate(["2", "+", "2"]) == 4
 calculate(["4", "+", "4"]) == 8
 calculate(["2", "-", "2"]) == 0
@@ -116,19 +127,10 @@ calculate("2 * 2") == 4
 calculate("2 - 2") == 0
 calculate("2 / 2") == 1
 
-//calculate("1 2 3 4 5 count") == 5
-//calculate("1 2 3 4 5 avg") == 3
-//calculate("5 fact") == 120
+calculate("1 2 3 4 5 count") == 5
+calculate("1 2 3 4 5 avg") == 3
+calculate("5 fact") == 120
 
-//: -------------------------------------------
-//: These are extra credit tests; they are commented out 
-//: so that they do not conflict with you work until you 
-//: choose to implement them.
-//: Uncomment them to turn them on for evaluation.
-//:
-//: Implement `calculate([String])` and `calculate(String)` to handle negative numbers. You need only make the tests below pass. (You do not need to worry about "fact"/factorial with negative numbers, for example.)
-//:
-//: This is worth 1 pt
 /*
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
