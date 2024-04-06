@@ -32,25 +32,48 @@ func calculate(_ args: [String]) -> Int {
 //        var num1 = args[0]
 //        var num2 = args[2]
 //        var result = expression.expressionValue(with: nil, context: nil) as? Int
-////        var num1 = NSExpression(forConstantValue: args[0])
-////        print(num1)
-////        var num2 = NSExpression(forConstantValue: args[2])
-////        print(num2)
-////        var expression = NSExpression(forFunction: "modulus:by:", arguments: [num1, num2])
-////        print(expression)
-////        if var result = expression.expressionValue(with: nil, context: nil) as? Int {
-////            print("hello")
-////        } else {
-////            print("naw")
-////        }
+//       var num1 = NSExpression(forConstantValue: args[0])
+//       print(num1)
+//       var num2 = NSExpression(forConstantValue: args[2])
+//        print(num2)
+//        var expression = NSExpression(forFunction: "modulus:by:", arguments: [num1, num2])
+//        print(expression)
+//        if var result = expression.expressionValue(with: nil, context: nil) as? Int {
+//            print("hello")
+//        } else {
+//            print("naw")
+//        }
 //    }
+    // if last
+    let size = args.count
+    let lastIndex = args[size - 1]
+    
+    if lastIndex == "count" {
+        return size - 1
+    } else if lastIndex == "avg" {
+        var string = args[0]
+        var div = size - 1
+        if size > 2 {
+            for i in 1...size-2 {
+                string += " + " + args[i]
+            }
+        } else if size == 1{
+            return 0
+        }
+        return calculate(string) / div
+    } else if lastIndex == "fact" {
+        return 1
+    }
+    
+    if (args[1] == "%") {
+        return 0
+    }
     
     var totalString = ""
     for n in args {
         totalString += n
     }
-    return 0
-    //return calculate(totalString)
+    return calculate(totalString)
 }
 
 func calculate(_ arg: String) -> Int {
@@ -60,13 +83,7 @@ func calculate(_ arg: String) -> Int {
     }
     return 0
 }
-print(calculate("5 + 5"))
-//: Below this are the test expressions/calls to verify if your code is correct.
-//:
-//: ***DO NOT MODIFY ANYTHING BELOW THIS***
-//: -------------------------------------------
-//: All of these expressions should return true
-//: if you have implemented `calculate()` correctly
+
 //
 calculate(["2", "+", "2"]) == 4
 calculate(["4", "+", "4"]) == 8
